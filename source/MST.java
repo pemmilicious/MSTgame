@@ -17,9 +17,12 @@ public class MST {
         usersChoice = Integer.parseInt(usersChoiceString);
                 if (usersChoice == 1){
                     gameStart();}
-                else{
+                else if (usersChoice == 2){
                     exitGame();
                     }
+                    else{
+                        displayMenu();
+                }
 
 
     }
