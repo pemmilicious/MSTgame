@@ -40,10 +40,8 @@ public class MST {
     private static void newGameStart() {
         int numPlayers = getNumPlayers();
         STGame game = new STGame(numPlayers);
-        System.out.println();
-        game.dealCards();
         game.getDealer();
-//        game.dealCards();
+        game.dealCards();
 
 //        dealCards();
     }
@@ -53,15 +51,15 @@ public class MST {
     }
 
     public static int getNumPlayers() {
-//        String numPlayersString;
-        int numPlayers = 5;
-//        numPlayersString = JOptionPane.showInputDialog(null,
-//                "Enter the number of players(Min 3, Max 5");
-//        numPlayers = Integer.parseInt(numPlayersString);
-//            if(numPlayers > 5 || numPlayers < 3)
-//                getNumPlayers();
-//                else
-//                System.out.println(numPlayers);
+        String numPlayersString;
+        int numPlayers = 0;
+        numPlayersString = JOptionPane.showInputDialog(null,
+                "Enter the number of players(Min 3, Max 5");
+        numPlayers = Integer.parseInt(numPlayersString);
+            if(numPlayers > 5 || numPlayers < 3)
+                getNumPlayers();
+                else
+                System.out.println(numPlayers);
         return numPlayers;
     }
 }

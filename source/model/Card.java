@@ -1,6 +1,6 @@
 package model;
 
-public class Card {
+class Card {
     private String cryptal_system;
     private String chemistry;
     private String fileName;
@@ -15,7 +15,7 @@ public class Card {
     private String cleavage;
     private String crustal_abundance;
     private String subtitle;
-    private String[] occurrence;
+    public String[] occurrence;
 
 
     public String getCryptal_system() {

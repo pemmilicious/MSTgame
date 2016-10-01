@@ -2,13 +2,11 @@ package model;
 
 import xmlwise.Plist;
 import xmlwise.XmlParseException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class STDeck {
     public static ArrayList<Card> createDeck() {
@@ -74,6 +72,7 @@ public class STDeck {
                 arrayOfCards.add(item);
             }
             return arrayOfCards;
+
 
         } catch (XmlParseException e) {
             e.printStackTrace();
