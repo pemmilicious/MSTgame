@@ -31,9 +31,9 @@ public class STGame {
 
     //Shuffle Cards then deal them into hands
     public void dealCards() {
-        ArrayList<Card> player1 = new ArrayList<>();
+        ArrayList<Card> playersHand = new ArrayList<>();
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
-            player1.add(randomCardFromDeck(randomCard));
+            playersHand.add(randomCardFromDeck(randomCard));
         }
         ArrayList<Card> player2 = new ArrayList<>();
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
@@ -43,7 +43,7 @@ public class STGame {
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             player3.add(randomCardFromDeck(randomCard));
         }
-        System.out.println(player1);
+        System.out.println(playersHand);
         System.out.println(player2);
         System.out.println(player3);
 
