@@ -65,29 +65,37 @@ public class STGame {
     }
 
     public void chooseCardToPlay() {
-
         String name = new String();
-        getName();
-        System.out.println(name);
-        System.out.println(playersHand.size());
+        name = getName();
         for (int j = 0; j < playersHand.size(); j++) {
             Card card = playersHand.get(j);
-            System.out.println(card.getTitle());
-            if (name.equals(card.getTitle())){
-                System.out.println(true);
+            if (name.equals(card.getTitle())) {
+                playCards(card);
+                break;
             } else
-                System.out.println(false);
+                
         }
     }
+
+
+
     private String getName() {
         String name;
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter name: ");
+        System.out.print("Enter the card you wish to play: ");
         name = input.nextLine();
         return name;
 
     }
-
+    private void playCards(Card card) {
+        System.out.println("You have chosen to play the " + card.getTitle() + "card");
+        playersHand.remove(card);
+        System.out.println("Your remaining Cards: ");
+        for (int x = 0; x < playersHand.size(); x++) {
+            card = playersHand.get(x);
+            System.out.println(card.getTitle());
+        }
+    }
 
 }
 
