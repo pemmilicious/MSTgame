@@ -1,20 +1,15 @@
 package model;
-import xmlwise.Plist;
-import xmlwise.XmlParseException;
-
-import javax.smartcardio.*;
-import java.io.IOException;
+import java.util.Scanner;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static sun.audio.AudioPlayer.player;
 
 public class STGame {
     private static final int NUM_CARDS_TO_DEAL = 8;
     private int numPlayers;
     private int chosenDealer;;
     public Object randomCard;
-    public ArrayList cards = STDeck.createDeck();
+    public ArrayList<Card> cards = STDeck.createDeck();
+    public ArrayList<Card> playersHand = new ArrayList<>();
+    private HashMap<Object, Object> shuffledCards;
 
     public STGame(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -30,30 +25,67 @@ public class STGame {
 
 
     //Shuffle Cards then deal them into hands
-    public void dealCards() {
-        ArrayList<Card> playersHand = new ArrayList<>();
+    public ArrayList<Card> dealCards() {
+        System.out.println(Card.class);
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
-            playersHand.add(randomCardFromDeck(randomCard));
+            Collections.shuffle(cards);
+            this.randomCard = cards.get(0);
+            playersHand.add((Card) randomCard);
+            cards.remove(0);
         }
         ArrayList<Card> player2 = new ArrayList<>();
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
-            player2.add(randomCardFromDeck(randomCard));
+            Collections.shuffle(cards);
+            player2.add((Card) randomCard);
+            cards.remove(0);
         }
         ArrayList<Card> player3 = new ArrayList<>();
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
-            player3.add(randomCardFromDeck(randomCard));
+            Collections.shuffle(cards);
+            player3.add((Card) randomCard);
+            cards.remove(0);
         }
         System.out.println(playersHand);
-        System.out.println(player2);
-        System.out.println(player3);
 
+        return player2;
     }
 
-    private Card randomCardFromDeck(Object randomCard) {
-        Collections.shuffle(cards);
-        this.randomCard = cards.get(0);
-        cards.remove(0);
-        return (Card) this.randomCard;
+
+
+    public void reviewCards() {
+        Card card1 = playersHand.get(0);
+        Card card2 = playersHand.get(1);
+        Card card3 = playersHand.get(2);
+        Card card4 = playersHand.get(3);
+        Card card5 = playersHand.get(4);
+        Card card6 = playersHand.get(5);
+        Card card7 = playersHand.get(6);
+        Card card8 = playersHand.get(7);
+        System.out.println("Your Cards are: " + card1.getTitle() +", "+ card2.getTitle() +", "+ card3.getTitle()+", "+ card4.getTitle()+", "+ card5.getTitle()+", "+ card6.getTitle()+", "+ card7.getTitle()+ ", "+card8.getTitle());
+    }
+
+    public void chooseCardToPlay() {
+
+        String name = new String();
+        getName();
+        System.out.println(name);
+        System.out.println(playersHand.size());
+        for (int j = 0; j < playersHand.size(); j++) {
+            Card card = playersHand.get(j);
+            System.out.println(card.getTitle());
+            if (name.equals(card.getTitle())){
+                System.out.println(true);
+            } else
+                System.out.println(false);
+        }
+    }
+    private String getName() {
+        String name;
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        name = input.nextLine();
+        return name;
+
     }
 
 

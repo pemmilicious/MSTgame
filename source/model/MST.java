@@ -38,15 +38,13 @@ public class MST {
     }
 
     private static void newGameStart() {
-        String playerName = null;
-        Player player = new Player(playerName);
-        System.out.println(playerName);
         int numPlayers = getNumPlayers();
         STGame game = new STGame(numPlayers);
         game.getDealer();
         game.dealCards();
+        game.reviewCards();
+        game.chooseCardToPlay();
 
-//        dealCards();
     }
 
     private static void welcomeMessage() {

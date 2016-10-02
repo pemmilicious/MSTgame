@@ -8,7 +8,7 @@ class Card {
     private String economic_value;
     private String crystal_system;
     private String specific_gravity;
-    private String classification;
+    public String classification;
     private String title;
     private String card_type;
     private String hardness;

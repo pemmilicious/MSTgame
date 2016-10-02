@@ -18,9 +18,6 @@ public class Player {
         this.currentPlayer = false;
     }
 
-    public Player(String playerName) {
-
-    }
 
     public int getPlayerIndex() {
         return playerIndex;
@@ -30,15 +27,10 @@ public class Player {
         this.playerIndex = playerIndex;
     }
 
-    public String getPlayerName() {
-        String playerNameString = JOptionPane.showInputDialog(null,
-                "Enter your Name: ");
-        playerName = playerNameString;
-        return playerName;
-    }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+
     }
 
     public boolean isDealer() {
