@@ -271,7 +271,7 @@ public class STGame {
 
 
 
-jp
+
 
 
 
