@@ -1,20 +1,13 @@
 package model;
-
-import model.STGame;
-
 import javax.swing.*;
 import javax.swing.text.html.CSS;
 import java.util.ArrayList;
-
 public class MST {
-
 
     public static void main(String[] args) {
         welcomeMessage();
         displayMenu();
     }
-
-
     private static void displayMenu() {
         String usersChoiceString;
         int usersChoice = 0;
@@ -31,30 +24,28 @@ public class MST {
                     else
                         displayMenu();
                     }
-
     private static void displayRules() {
     }
-
-
     private static void exitGame() {
         System.out.println("catchya later");
     }
-
     private static void newGameStart() {
+
+
+        int round = 0;
         int numPlayers = getNumPlayers();
         STGame game = new STGame(numPlayers);
         game.getDealer();
         game.dealCards();
         game.reviewCards();
-        game.chooseCatergory();
-        if (game.chooseCardToPlay() == null){
-            game.chooseCardToPlay();
+        game.startRounds();
+
+//        }while (game.player1.size() != 0 & game.player2.size() != 0 & game.player3.size() != 0 & game.player4.size() != 0);
         }
-    }
+
     private static void welcomeMessage() {
         System.out.println("hello");
     }
-
     public static int getNumPlayers() {
         String numPlayersString;
         int numPlayers = 0;
