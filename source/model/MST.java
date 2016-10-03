@@ -30,17 +30,11 @@ public class MST {
         System.out.println("catchya later");
     }
     private static void newGameStart() {
-
-
-        int round = 0;
         int numPlayers = getNumPlayers();
         STGame game = new STGame(numPlayers);
         game.getDealer();
         game.dealCards();
-        game.reviewCards();
         game.startRounds();
-
-//        }while (game.player1.size() != 0 & game.player2.size() != 0 & game.player3.size() != 0 & game.player4.size() != 0);
         }
 
     private static void welcomeMessage() {

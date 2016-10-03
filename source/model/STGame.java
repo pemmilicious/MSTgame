@@ -6,12 +6,14 @@ public class STGame {
     private static final int NUM_CARDS_TO_DEAL = 8;
     private int numPlayers;
     public Object randomCard;
-    public ArrayList<Card> cards = STDeck.createDeck();
-    public ArrayList<Card> player1 = new ArrayList<>();
-    public ArrayList<Card> player3 = new ArrayList<>();
-    public ArrayList<Card> player2 = new ArrayList<>();
-    public ArrayList<Card> player4 = new ArrayList<>();
+    public ArrayList<STCard> cards = STDeck.createDeck();
+    public ArrayList<STCard> player1 = new ArrayList<>();
+    public ArrayList<STCard> player3 = new ArrayList<>();
+    public ArrayList<STCard> player2 = new ArrayList<>();
+    public ArrayList<STCard> player4 = new ArrayList<>();
     static int turn = 1;
+    String category = new String;
+
 
 
 
@@ -29,53 +31,51 @@ public class STGame {
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
             this.randomCard = cards.get(0);
-            player1.add((Card) randomCard);
+            player1.add((STCard) randomCard);
             cards.remove(0);
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
-            player4.add((Card) randomCard);
+            player4.add((STCard) randomCard);
             cards.remove(0);
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
-            player2.add((Card) randomCard);
+            player2.add((STCard) randomCard);
             cards.remove(0);
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
-            player3.add((Card) randomCard);
+            player3.add((STCard) randomCard);
             cards.remove(0);
 
 
         }
     }
-    public void reviewCards() {
-        System.out.println("Your Hand of cards is: ");
-        for (int x = 0; x < player1.size(); x++) {
-            Card card = player1.get(x);
-            System.out.println(card.getTitle());
-//            System.out.println("Hardness: " + card.getHardness() + ", Specified Gravity: " + card.getSpecific_gravity());
-//            System.out.println("Crustal Abundance: " + card.getCrustal_abundance() + ", Economic Value: " + card.getEconomic_value() + ", Cleavage: " + card.getCleavage());
-        }
-    }
-    public Card chooseCardToPlay() {
+
+    public String chooseCardToPlay(ArrayList playerCards) {
         String name = new String();
         name = getName();
-        for (int j = 0; j < player1.size(); j++) {
-            Card card = player1.get(j);
+        for (int j = 0; j < playerCards.size(); j++) {
+            STCard card = (STCard) playerCards.get(j);
             if (name.equals(card.getTitle())) {
                 System.out.println("You have chosen " + card.getTitle());
                 System.out.println("Hardness: " + card.getHardness() + ", Specified Gravity: " + card.getSpecific_gravity());
                 System.out.println("Crustal Abundance: " + card.getCrustal_abundance() + ", Economic Value: " + card.getEconomic_value() + ", Cleavage: " + card.getCleavage());
-                playCards(card);
+                Scanner input = new Scanner(System.in);
+                System.out.print("Are you sure you want to play this card? Y/N:  ");
+                String choice = input.nextLine();
+                if (choice.equalsIgnoreCase("Y")){
+                    turn++;
+                    playCards(card);
+                }
             } else
                 System.out.print("");
 
         }
         return null;
     }
-    private String getName() {
+    private static String getName() {
         String name;
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the card you wish to play: ");
@@ -83,69 +83,110 @@ public class STGame {
         return name;
 
     }
-    public void playCards(Card card) {
+    public void playCards(STCard card) {
+        STCard previousCard = null;
+        if (turn == 1){
+            previousCard = card;
+        } else {
+            STCard newCard = previousCard;
+            newCard = card;
+            compareCards(newCard, previousCard);
+
+
+        }
         System.out.println("You have chosen to play the " + card.getTitle() + "card");
         player1.remove(card);
+
         System.out.println("Your remaining Cards: ");
         for (int x = 0; x < player1.size(); x++) {
             card = player1.get(x);
             System.out.println(card.getTitle());
         }
+        System.out.println("------------------------------------------");
     }
+
+    private void compareCards(STCard previousCard, STCard newCard) {
+        if (category.equalsIgnoreCase("Cleavage")) {
+            computeCleavage(previousCard);
+            computeCleavage(newCard);
+        } else if (category.equalsIgnoreCase("economic value")) {
+            computeEconomicalValue(previousCard);
+            computeEconomicalValue(newCard);
+        } else if (category.equalsIgnoreCase("Hardness")) {
+            computeHardness(previousCard);
+            computeHardness(newCard);
+        } else if (category.equalsIgnoreCase("Crustal Abundance")) {
+            computeCrustal(previousCard);
+            computeCrustal(newCard);
+        } else if (category.equalsIgnoreCase("Specified gravity")) {
+            computeGravity(previousCard);
+            computeGravity(newCard);
+        }
+    }
+
     public void startRounds() {
         do {
             if(turn == 1){
                 startGame(player1);
-                turn++;
                 startRounds();
             }
             if(turn == 2){
                 startGame(player2);
-                turn++;
                 startRounds();
             }
             if(turn == 3){
                 startGame(player3);
-                turn++;
                 startRounds();
             }
             if(turn == 4){
                 startGame(player4);
-                turn++;
+                turn = 1;
                 startRounds();
             }
 
 
         }while (player1.size() != 0 & player2.size() != 0 & player3.size() != 0 & player4.size() != 0);
     }
-    public static void startGame(ArrayList playerCards) {
+    public void startGame(ArrayList playerCards) {
+        System.out.println("Player"+ turn+"'s Cards are: ");
         for (int i = 0; i < playerCards.size(); i++) {
-            Card card = (Card) playerCards.get(i);
+            STCard card = (STCard) playerCards.get(i);
             System.out.println(card.getTitle());
         }
+        if (turn == 1){
+            category = chooseCategory();
+        }else if (turn == 4)
+            turn = 1;
+        chooseCardToPlay(playerCards);
     }
 
-    private void chooseCategory() {
+    private static String chooseCategory() {
         String category = new String();
         Scanner input = new Scanner(System.in);
         System.out.print("Please Choose a playing Category(Cleavage, Hardness, specified gravity, Economic Value, Crustal Abundance): ");
         category = input.nextLine();
         if (category.equalsIgnoreCase("Cleavage")) {
             System.out.println("you have chosen the " + category + " Category");
+            return category;
         } else if (category.equalsIgnoreCase("Hardness")) {
             System.out.println("you have chosen the " + category + " Category");
+            return category;
         } else if (category.equalsIgnoreCase("Specified gravity")) {
             System.out.println("you have chosen the " + category + " Category");
+            return category;
         } else if (category.equalsIgnoreCase("economic value")) {
             System.out.println("you have chosen the " + category + " Category");
+            return category;
         } else if (category.equalsIgnoreCase("crustal abundance")) {
             System.out.println("you have chosen the " + category + " Category");
+            return category;
         } else {
             System.out.println("Incorrect input, Please enter a valid input. ");
-            startRounds();
+            chooseCategory();
         }
+        return category;
     }
-    public static int computeCleavage(Card playerCard) {
+    public static int computeCleavage(STCard playerCard) {
         int cleavageNo;
         if (playerCard.getCleavage().equals("none")) {
             cleavageNo = 0;
@@ -190,7 +231,7 @@ public class STGame {
         }
         return cleavageNo;
     }
-    public static int computeEconomicalValue(Card playerCard) {
+    public static int computeEconomicalValue(STCard playerCard) {
         int economicValue = 0;
         if (playerCard.getEconomic_value().equals("trivial")) {
             economicValue = 0;
@@ -212,7 +253,7 @@ public class STGame {
         }
         return economicValue;
     }
-    public static int computeHardness(Card playerCard) {
+    public static int computeHardness(STCard playerCard) {
         int hardnessNo = 0;
         String hardness1 = playerCard.getHardness();
         if (hardness1.indexOf('-') >= 0) {
@@ -225,7 +266,7 @@ public class STGame {
             return Integer.parseInt(playerCard.getHardness());
         }
     }
-    public static int computeCrustal(Card playerCard) {
+    public static int computeCrustal(STCard playerCard) {
         int crustalNo = 0;
         if (playerCard.getCrustal_abundance().equals("ultratrace")) {
             crustalNo = 0;
@@ -248,7 +289,7 @@ public class STGame {
         return crustalNo;
 
     }
-    public static int computeGravity(Card playerCard) {
+    public static int computeGravity(STCard playerCard) {
         int gravityNo;
         String gravity1 = playerCard.getSpecific_gravity();
         if (gravity1.indexOf('-') >= 0) {
@@ -261,7 +302,6 @@ public class STGame {
             return Integer.parseInt(playerCard.getHardness());
         }
     }
-
 
 }
 

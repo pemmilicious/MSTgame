@@ -9,18 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 public class STDeck {
-    public static ArrayList<Card> createDeck() {
+    public static ArrayList<STCard> createDeck() {
         try {
             Map<String, Object> properties = Plist.load("source/model/MstCards_151021.plist");
             Object cardObject = properties.get("cards");
             ArrayList arrayList = (ArrayList) cardObject;
-            ArrayList<Card> arrayOfCards = new ArrayList<Card>();
+            ArrayList<STCard> arrayOfCards = new ArrayList<STCard>();
 
-            //Separating each objects and storing it in Item class
             for (int i = 0; i < arrayList.size(); i++) {
                 HashMap individual = (HashMap) arrayList.get(i);
 
-                Card item = new Card();
+                STCard item = new STCard();
 
                 if (individual.get("chemistry") != null) {
                     item.setChemistry(individual.get("chemistry").toString());
@@ -62,23 +61,19 @@ public class STDeck {
                     item.setSubtitle(individual.get("subtitle").toString());
                 }
 
-                //setting occurance value, array
                 if (individual.get("occurrence") != null) {
                     List occuranceArrayList = (List) individual.get("occurrence");
                     String[] occuranceArray = (String[]) occuranceArrayList.toArray(new String[occuranceArrayList.size()]);
                     item.setOccurrence(occuranceArray);
                 }
-
                 arrayOfCards.add(item);
             }
             return arrayOfCards;
-
-
         } catch (XmlParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } // loads the (nested) properties.
+        }
         return null;
     }
 }

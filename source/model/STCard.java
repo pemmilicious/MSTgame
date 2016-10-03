@@ -1,20 +1,20 @@
 package model;
 
-class Card {
-    private String cryptal_system;
-    private String chemistry;
-    private String fileName;
-    private String imageName;
-    private String economic_value;
-    private String crystal_system;
-    private String specific_gravity;
+class STCard {
+    public String cryptal_system;
+    public String chemistry;
+    public String fileName;
+    public String imageName;
+    public String economic_value;
+    public String crystal_system;
+    public String specific_gravity;
     public String classification;
-    private String title;
-    private String card_type;
-    private String hardness;
-    private String cleavage;
-    private String crustal_abundance;
-    private String subtitle;
+    public String title;
+    public String card_type;
+    public String hardness;
+    public String cleavage;
+    public String crustal_abundance;
+    public String subtitle;
     public String[] occurrence;
 
 
