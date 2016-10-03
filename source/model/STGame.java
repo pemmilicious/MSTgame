@@ -12,7 +12,9 @@ public class STGame {
     public ArrayList<STCard> player2 = new ArrayList<>();
     public ArrayList<STCard> player4 = new ArrayList<>();
     static int turn = 1;
-    String category = new String;
+    String category = null;
+    static int previousInt = 0;
+    static int newInt = 0;
 
 
 
@@ -84,15 +86,14 @@ public class STGame {
 
     }
     public void playCards(STCard card) {
-        STCard previousCard = null;
+        STCard previousCard = new STCard();
+        STCard newCard = new STCard();
         if (turn == 1){
             previousCard = card;
         } else {
-            STCard newCard = previousCard;
+            previousCard = newCard;
             newCard = card;
             compareCards(newCard, previousCard);
-
-
         }
         System.out.println("You have chosen to play the " + card.getTitle() + "card");
         player1.remove(card);
@@ -106,9 +107,12 @@ public class STGame {
     }
 
     private void compareCards(STCard previousCard, STCard newCard) {
+        int cleavageNo = 0;
         if (category.equalsIgnoreCase("Cleavage")) {
-            computeCleavage(previousCard);
-            computeCleavage(newCard);
+            previousInt = computeCleavage(previousCard);
+            newInt = computeCleavage(newCard);
+            System.out.println(previousInt);
+            System.out.println(newInt);
         } else if (category.equalsIgnoreCase("economic value")) {
             computeEconomicalValue(previousCard);
             computeEconomicalValue(newCard);
@@ -229,6 +233,7 @@ public class STGame {
         } else {
             cleavageNo = 13;
         }
+        System.out.println(cleavageNo);
         return cleavageNo;
     }
     public static int computeEconomicalValue(STCard playerCard) {
