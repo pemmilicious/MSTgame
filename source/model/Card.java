@@ -56,6 +56,7 @@ class Card {
 
     public void setEconomic_value(String economic_value) {
         this.economic_value = economic_value;
+
     }
 
     public String getCrystal_system() {

@@ -19,19 +19,22 @@ public class MST {
         String usersChoiceString;
         int usersChoice = 0;
         usersChoiceString = JOptionPane.showInputDialog(null,
-                "Enter 1 or 2\n1 - Start Game\n2 - Exit");
+                "Enter 1 or 2\n1 - Start Game\n2 - view Rules\n3 - Exit");
         usersChoice = Integer.parseInt(usersChoiceString);
                 if (usersChoice == 1){
                     newGameStart();}
                 else if (usersChoice == 2){
-                    exitGame();
+                    displayRules();
                     }
-                    else{
+                    else if (usersChoice == 3) {
+                    exitGame();}
+                    else
                         displayMenu();
-                }
+                    }
 
-
+    private static void displayRules() {
     }
+
 
     private static void exitGame() {
         System.out.println("catchya later");
@@ -43,10 +46,11 @@ public class MST {
         game.getDealer();
         game.dealCards();
         game.reviewCards();
-        game.chooseCardToPlay();
-
+        game.chooseCatergory();
+        if (game.chooseCardToPlay() == null){
+            game.chooseCardToPlay();
+        }
     }
-
     private static void welcomeMessage() {
         System.out.println("hello");
     }
