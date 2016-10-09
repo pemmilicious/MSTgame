@@ -21,72 +21,55 @@ class STCard {
     public String getCryptal_system() {
         return cryptal_system;
     }
-
     public void setCryptal_system(String cryptal_system) {
         this.cryptal_system = cryptal_system;
     }
-
     public String getChemistry() {
         return chemistry;
     }
-
     public void setChemistry(String chemistry) {
         this.chemistry = chemistry;
     }
-
     public String getFileName() {
         return fileName;
     }
-
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-
     public String getImageName() {
         return imageName;
     }
-
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
-
     public String getEconomic_value() {
         return economic_value;
     }
-
     public void setEconomic_value(String economic_value) {
         this.economic_value = economic_value;
 
     }
-
     public String getCrystal_system() {
         return crystal_system;
     }
-
     public void setCrystal_system(String crystal_system) {
         this.crystal_system = crystal_system;
     }
-
     public String getSpecific_gravity() {
         return specific_gravity;
     }
-
     public void setSpecific_gravity(String specific_gravity) {
         this.specific_gravity = specific_gravity;
     }
-
     public String getClassification() {
         return classification;
     }
-
     public void setClassification(String classification) {
         this.classification = classification;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }

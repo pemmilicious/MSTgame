@@ -54,7 +54,6 @@ public class STGame {
 
         }
     }
-
     public String chooseCardToPlay(ArrayList playerCards) {
         String name = new String();
         name = getName();
@@ -105,7 +104,6 @@ public class STGame {
         }
         System.out.println("------------------------------------------");
     }
-
     private void compareCards(STCard previousCard, STCard newCard) {
         int cleavageNo = 0;
         if (category.equalsIgnoreCase("Cleavage")) {
@@ -127,7 +125,6 @@ public class STGame {
             computeGravity(newCard);
         }
     }
-
     public void startRounds() {
         do {
             if(turn == 1){
@@ -163,7 +160,6 @@ public class STGame {
             turn = 1;
         chooseCardToPlay(playerCards);
     }
-
     private static String chooseCategory() {
         String category = new String();
         Scanner input = new Scanner(System.in);
