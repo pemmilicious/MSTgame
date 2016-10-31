@@ -1,8 +1,10 @@
 package model;
+import javax.swing.*;
 import java.util.Scanner;
 import java.util.*;
 
 public class STGame {
+////////////////////////////////////Variables//////////////////////////////////////////
     private static final int NUM_CARDS_TO_DEAL = 8;
     private int numPlayers;
     public Object randomCard;
@@ -12,13 +14,12 @@ public class STGame {
     public ArrayList<STCard> player2 = new ArrayList<>();
     public ArrayList<STCard> player4 = new ArrayList<>();
     static int turn = 1;
-    String category = null;
-    static int previousInt = 0;
-    static int newInt = 0;
-
-
-
-
+    String category = new String();
+    static STCard chosenCard = new STCard();
+    public STCard leadingCard = new STCard();
+    public int round = 1;
+////////////////////////////////////End Variables//////////////////////////////////////
+////////////////////////////////////Functions//////////////////////////////////////////
     public STGame(int numPlayers) {
         this.numPlayers = numPlayers;
 
@@ -38,23 +39,24 @@ public class STGame {
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
+            this.randomCard = cards.get(0);
             player4.add((STCard) randomCard);
             cards.remove(0);
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
+            this.randomCard = cards.get(0);
             player2.add((STCard) randomCard);
             cards.remove(0);
         }
         for (int i = 0; i < NUM_CARDS_TO_DEAL; i++) {
             Collections.shuffle(cards);
+            this.randomCard = cards.get(0);
             player3.add((STCard) randomCard);
             cards.remove(0);
-
-
         }
     }
-    public String chooseCardToPlay(ArrayList playerCards) {
+    public STCard chooseCardToPlay(ArrayList playerCards) {
         String name = new String();
         name = getName();
         for (int j = 0; j < playerCards.size(); j++) {
@@ -66,13 +68,18 @@ public class STGame {
                 Scanner input = new Scanner(System.in);
                 System.out.print("Are you sure you want to play this card? Y/N:  ");
                 String choice = input.nextLine();
-                if (choice.equalsIgnoreCase("Y")){
+                if (choice.equalsIgnoreCase("Y")) {
                     turn++;
-                    playCards(card);
+                    playerCards.remove(card);
                 }
-            } else
-                System.out.print("");
+                else
+                    startRounds();
 
+            }else if (name.equalsIgnoreCase("pass")) {
+                playerCards.add((STCard) randomCard);
+                turn++;
+                startRounds();
+            }
         }
         return null;
     }
@@ -84,87 +91,12 @@ public class STGame {
         return name;
 
     }
-    public void playCards(STCard card) {
-        STCard previousCard = new STCard();
-        STCard newCard = new STCard();
-        if (turn == 1){
-            previousCard = card;
-        } else {
-            previousCard = newCard;
-            newCard = card;
-            compareCards(newCard, previousCard);
-        }
-        System.out.println("You have chosen to play the " + card.getTitle() + "card");
-        player1.remove(card);
-
-        System.out.println("Your remaining Cards: ");
-        for (int x = 0; x < player1.size(); x++) {
-            card = player1.get(x);
-            System.out.println(card.getTitle());
-        }
-        System.out.println("------------------------------------------");
-    }
-    private void compareCards(STCard previousCard, STCard newCard) {
-        int cleavageNo = 0;
-        if (category.equalsIgnoreCase("Cleavage")) {
-            previousInt = computeCleavage(previousCard);
-            newInt = computeCleavage(newCard);
-            System.out.println(previousInt);
-            System.out.println(newInt);
-        } else if (category.equalsIgnoreCase("economic value")) {
-            computeEconomicalValue(previousCard);
-            computeEconomicalValue(newCard);
-        } else if (category.equalsIgnoreCase("Hardness")) {
-            computeHardness(previousCard);
-            computeHardness(newCard);
-        } else if (category.equalsIgnoreCase("Crustal Abundance")) {
-            computeCrustal(previousCard);
-            computeCrustal(newCard);
-        } else if (category.equalsIgnoreCase("Specified gravity")) {
-            computeGravity(previousCard);
-            computeGravity(newCard);
-        }
-    }
-    public void startRounds() {
-        do {
-            if(turn == 1){
-                startGame(player1);
-                startRounds();
-            }
-            if(turn == 2){
-                startGame(player2);
-                startRounds();
-            }
-            if(turn == 3){
-                startGame(player3);
-                startRounds();
-            }
-            if(turn == 4){
-                startGame(player4);
-                turn = 1;
-                startRounds();
-            }
-
-
-        }while (player1.size() != 0 & player2.size() != 0 & player3.size() != 0 & player4.size() != 0);
-    }
-    public void startGame(ArrayList playerCards) {
-        System.out.println("Player"+ turn+"'s Cards are: ");
-        for (int i = 0; i < playerCards.size(); i++) {
-            STCard card = (STCard) playerCards.get(i);
-            System.out.println(card.getTitle());
-        }
-        if (turn == 1){
-            category = chooseCategory();
-        }else if (turn == 4)
-            turn = 1;
-        chooseCardToPlay(playerCards);
-    }
     private static String chooseCategory() {
         String category = new String();
-        Scanner input = new Scanner(System.in);
-        System.out.print("Please Choose a playing Category(Cleavage, Hardness, specified gravity, Economic Value, Crustal Abundance): ");
-        category = input.nextLine();
+        String categoryString;
+        categoryString = JOptionPane.showInputDialog(null,
+                "Please Choose a playing Category(Cleavage, Hardness, specified gravity, Economic Value, Crustal Abundance): ");
+        category = categoryString;
         if (category.equalsIgnoreCase("Cleavage")) {
             System.out.println("you have chosen the " + category + " Category");
             return category;
@@ -185,6 +117,102 @@ public class STGame {
             chooseCategory();
         }
         return category;
+    }
+    public void startRounds() {
+        StartGUI rFrame = new StartGUI();
+        rFrame.setSize(1200, 900);
+        rFrame.setVisible(true);
+        do {
+
+            if(turn == 1){
+                startGame(player1);
+                startRounds();
+            }
+            if(turn == 2){
+                startGame(player2);
+                startRounds();
+            }
+            if(turn == 3){
+                startGame(player3);
+                startRounds();
+            }
+            if(turn == 4){
+                turn = 1;
+                startGame(player4);
+                startRounds();
+            }
+
+
+        }while (player1.size() != 0 & player2.size() != 0 & player3.size() != 0 & player4.size() != 0);
+    }
+    public void startGame(ArrayList playerCards) {
+        System.out.println("Player"+ turn+"'s Cards are: ");
+        for (int i = 0; i < playerCards.size(); i++) {
+            STCard card = (STCard) playerCards.get(i);
+            System.out.println(card.getTitle());
+        }
+        if (round <= 1){
+            round++;
+            category = chooseCategory();
+            leadingCard = chooseCardToPlay(playerCards);
+            System.out.println("The Leading Card is" + leadingCard.getTitle());
+            playerCards.remove(leadingCard);
+            startRounds();
+        }else if (turn >= 1){
+            chosenCard = chooseCardToPlay(playerCards);
+        }
+        if (checkThatWin(chosenCard) == true) {
+            System.out.println("That card is higher, success!");
+            leadingCard = chosenCard;
+            playerCards.remove(chosenCard);
+            turn++;
+            startRounds();
+        } else {
+            System.out.println("That card won't do it.");
+            chooseCardToPlay(playerCards);
+        }
+    }
+    private boolean checkThatWin(STCard chosenCard) {
+        if (category.equalsIgnoreCase("hardness")) {
+            if (computeHardness(chosenCard) > computeHardness(leadingCard)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (category.equalsIgnoreCase("specific gravity")) {
+            if (computeGravity(chosenCard) > computeGravity(leadingCard)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (category.equalsIgnoreCase("cleavage")) {
+            if (computeCleavage(chosenCard) > computeCleavage(leadingCard)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (category.equalsIgnoreCase("crystal abundance")) {
+            if (computeCrustal(chosenCard) > computeCrustal(leadingCard)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if (computeEconomicalValue(chosenCard) > computeEconomicalValue(leadingCard)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
     public static int computeCleavage(STCard playerCard) {
         int cleavageNo;
@@ -229,7 +257,6 @@ public class STGame {
         } else {
             cleavageNo = 13;
         }
-        System.out.println(cleavageNo);
         return cleavageNo;
     }
     public static int computeEconomicalValue(STCard playerCard) {
@@ -303,36 +330,5 @@ public class STGame {
             return Integer.parseInt(playerCard.getHardness());
         }
     }
-
+    ////////////////////////////////////End Functions//////////////////////////////////
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
